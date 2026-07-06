@@ -5,6 +5,10 @@ import { Navigation } from './components/navigation.js';
 import { PomodoroTimer } from './pomodoro/timer.js';
 import { Stopwatch } from './stopwatch/stopwatch.js';
 import { storage } from './storage.js';
+import { soundManager } from './audio.js';
+
+const volumeOnSvg = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>`;
+const volumeOffSvg = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>`;
 
 const moonSvg = `<path class="moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
 const sunSvg = `<circle class="sun" cx="12" cy="12" r="5"></circle>
@@ -21,6 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Theme
     const currentTheme = initTheme();
     updateThemeIcon(currentTheme);
+
+    // Initialize Sound
+    updateSoundIcon(soundManager.isMuted);
 
     // Initialize SPA Router and Navigation
     const router = new Router('clock');
@@ -47,6 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
             storage.set('hide-date', isHidden);
         });
     }
+    
+    const soundToggleBtn = document.getElementById('sound-toggle');
+    if (soundToggleBtn) {
+        soundToggleBtn.addEventListener('click', () => {
+            const isMuted = soundManager.toggleMute();
+            updateSoundIcon(isMuted);
+        });
+    }
 
     const formatToggleBtn = document.getElementById('format-toggle');
     if (formatToggleBtn) {
@@ -62,11 +77,36 @@ document.addEventListener('DOMContentLoaded', () => {
             updateThemeIcon(newTheme);
         });
     }
+    
+    // View-specific Top Controls Logic
+    const soundBtn = document.getElementById('sound-toggle');
+    const dateBtn = document.getElementById('date-toggle');
+    
+    const updateTopControls = (view) => {
+        if (soundBtn) soundBtn.style.display = view === 'pomodoro' ? 'flex' : 'none';
+        if (dateBtn) dateBtn.style.display = view === 'clock' ? 'flex' : 'none';
+        if (formatToggleBtn) formatToggleBtn.style.display = view === 'clock' ? 'flex' : 'none';
+    };
+    
+    // Set initial state (default view is clock)
+    updateTopControls('clock');
+    
+    // Listen for view changes from router
+    window.addEventListener('viewChanged', (e) => {
+        updateTopControls(e.detail.view);
+    });
 });
 
 function updateThemeIcon(theme) {
     const iconContainer = document.getElementById('theme-icon');
     if (iconContainer) {
         iconContainer.innerHTML = theme === 'dark' ? sunSvg : moonSvg;
+    }
+}
+
+function updateSoundIcon(isMuted) {
+    const iconContainer = document.getElementById('sound-icon');
+    if (iconContainer) {
+        iconContainer.innerHTML = isMuted ? volumeOffSvg : volumeOnSvg;
     }
 }

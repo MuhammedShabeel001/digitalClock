@@ -2,6 +2,7 @@ import { settings } from './settings.js';
 import { ProgressRing } from './progress.js';
 import { padZero } from '../format.js';
 import { storage } from '../storage.js';
+import { soundManager } from '../audio.js';
 
 export class PomodoroTimer {
     constructor() {
@@ -51,6 +52,11 @@ export class PomodoroTimer {
             this.timeLeft--;
             this.updateDisplay();
             
+            // Only tick if it's a focus session, so breaks are silent
+            if (this.sessionType === 'focus' && this.timeLeft > 0) {
+                soundManager.playTick();
+            }
+            
             if (this.timeLeft <= 0) {
                 this.completeSession();
             }
@@ -73,7 +79,8 @@ export class PomodoroTimer {
     }
 
     completeSession() {
-        // Optional: Play sound
+        // Play alert sound
+        soundManager.playDing();
         this.pause();
         
         if (this.sessionType === 'focus') {
