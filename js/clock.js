@@ -43,24 +43,45 @@ export const toggleFormat = () => {
  * @param {string} newValue 
  * @param {boolean} force - if true, bypasses the fade animation check
  */
+const animateElement = (el, newValue, force) => {
+    if (force) {
+        el.textContent = newValue;
+        el.classList.remove('fade-out', 'fade-in');
+        return;
+    }
+    
+    el.classList.add('fade-out');
+    
+    setTimeout(() => {
+        el.textContent = newValue;
+        // Snap to top, invisible
+        el.classList.remove('fade-out');
+        el.classList.add('fade-in');
+        
+        // Force reflow to ensure the transition: none takes effect
+        void el.offsetWidth;
+        
+        // Remove fade-in so it smoothly bounces down to the normal position
+        el.classList.remove('fade-in');
+    }, 250); // Matched with the 250ms transition time in CSS
+};
+
 const updateElementValue = (el, newValue, force = false) => {
     if (!el) return;
     
-    if (el.textContent !== newValue) {
-        if (!force) {
-            // Apply fade out class
-            el.classList.add('fade');
-            
-            // Wait for transition to complete before changing value and fading back in
-            // Using 150ms to match the CSS --transition-fast
-            setTimeout(() => {
-                el.textContent = newValue;
-                el.classList.remove('fade');
-            }, 150);
-        } else {
-            // Update immediately without animation
-            el.textContent = newValue;
-            el.classList.remove('fade'); // ensure it's not stuck faded
+    const digits = el.querySelectorAll('.digit');
+    if (digits.length > 0) {
+        // It's a time part with individual digits
+        const chars = newValue.split('');
+        for (let i = 0; i < digits.length; i++) {
+            if (digits[i] && digits[i].textContent !== chars[i]) {
+                animateElement(digits[i], chars[i], force);
+            }
+        }
+    } else {
+        // It's a single text element (like AM/PM)
+        if (el.textContent !== newValue) {
+            animateElement(el, newValue, force);
         }
     }
 };

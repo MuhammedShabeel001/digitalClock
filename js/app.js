@@ -21,6 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
     initClock();
     
     // Event Listeners
+    const dateToggleBtn = document.getElementById('date-toggle');
+    const dateDisplay = document.querySelector('.date-display');
+    
+    // Load date visibility preference
+    const isDateHidden = localStorage.getItem('hide-date') === 'true';
+    if (isDateHidden && dateDisplay) {
+        dateDisplay.classList.add('hidden');
+    }
+
+    if (dateToggleBtn && dateDisplay) {
+        dateToggleBtn.addEventListener('click', () => {
+            const isHidden = dateDisplay.classList.toggle('hidden');
+            localStorage.setItem('hide-date', isHidden);
+        });
+    }
+
     const formatToggleBtn = document.getElementById('format-toggle');
     if (formatToggleBtn) {
         formatToggleBtn.addEventListener('click', () => {
