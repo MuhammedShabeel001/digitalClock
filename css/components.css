@@ -1,0 +1,99 @@
+.clock-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    transition: all var(--transition-normal);
+}
+
+.time-display {
+    display: flex;
+    align-items: baseline;
+    font-family: var(--font-time);
+    font-size: 10rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    line-height: 1;
+    color: var(--color-text-primary);
+}
+
+.time-part {
+    display: inline-block;
+    min-width: 1.2em; /* Ensure numbers don't jump around */
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    /* Smooth fade animation class will be added by JS when value changes */
+    transition: opacity var(--transition-fast);
+}
+
+.time-part.fade {
+    opacity: 0.3;
+}
+
+.colon {
+    margin: 0 0.1em;
+    opacity: 0.9;
+    color: var(--color-accent);
+}
+
+.am-pm {
+    font-size: 3rem;
+    font-weight: 400;
+    margin-left: 0.2em;
+    color: var(--color-text-secondary);
+    min-width: 2em; /* Keep layout stable when empty in 24h mode */
+    text-align: left;
+    letter-spacing: 1px;
+}
+
+.date-display {
+    font-size: 1.25rem;
+    font-family: var(--font-mono);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.weekday {
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+/* Top Controls */
+.top-controls {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    display: flex;
+    gap: var(--spacing-md);
+    z-index: 10;
+}
+
+.icon-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-bg);
+    color: var(--color-text-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--neumorphic-shadow);
+    transition: all var(--transition-normal);
+}
+
+.icon-btn:hover {
+    color: var(--color-accent);
+}
+
+.icon-btn:active {
+    box-shadow: var(--neumorphic-shadow-inset);
+    color: var(--color-accent);
+}
+
+#format-icon-text {
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-family: var(--font-time);
+    letter-spacing: 1px;
+}

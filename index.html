@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Controls (Top Right) -->
+    <div class="top-controls">
+        <button id="format-toggle" class="icon-btn" aria-label="Toggle 12/24 Hour Format">
+            <span id="format-icon-text">24</span>
+        </button>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle Light/Dark Theme">
+            <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Moon icon / Sun icon toggled via JS -->
+            </svg>
+        </button>
+    </div>
+
+    <main class="clock-container">
+        <div class="clock-content">
+            <!-- Time Display -->
+            <div class="time-display">
+                <span id="hours" class="time-part">00</span>
+                <span class="colon">:</span>
+                <span id="minutes" class="time-part">00</span>
+                <span class="colon">:</span>
+                <span id="seconds" class="time-part">00</span>
+                <span id="am-pm" class="am-pm"></span>
+            </div>
+
+            <!-- Date Display -->
+            <div class="date-display">
+                <span id="weekday" class="weekday">Monday</span>, 
+                <span id="full-date" class="full-date">01 January 2026</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- JS -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+:root {
+    /* Fonts */
+    --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-time: 'Bebas Neue', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 300ms ease;
+    
+    /* Spacing */
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    
+    /* Border Radius */
+    --radius-full: 9999px;
+    --radius-lg: 32px;
+}
+
+/* Dark Theme (Default) */
+[data-theme="dark"] {
+    --color-bg: #292d32;
+    --color-text-primary: #e5e7eb;
+    --color-text-secondary: #9ca3af;
+    --color-accent: #ef4444; /* Bright Red */
+    --neumorphic-shadow: 8px 8px 16px #1d1f23, -8px -8px 16px #353b41;
+    --neumorphic-shadow-inset: inset 6px 6px 12px #1f2226, inset -6px -6px 12px #33383e;
+}
+
+/* Light Theme */
+[data-theme="light"] {
+    --color-bg: #e0e5ec;
+    --color-text-primary: #4d5969;
+    --color-text-secondary: #8a96a3;
+    --color-accent: #dc2626; /* Deep Red */
+    --neumorphic-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+    --neumorphic-shadow-inset: inset 6px 6px 12px rgba(163, 177, 198, 0.6), inset -6px -6px 12px rgba(255, 255, 255, 0.5);
+}
