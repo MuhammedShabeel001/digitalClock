@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>klock</title>
+    <title>Time Suite</title>
     <link rel="icon" type="image/png" href="clock.png">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,11 +11,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
     <!-- CSS -->
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/variables.css?v=2">
+    <link rel="stylesheet" href="css/reset.css?v=2">
+    <link rel="stylesheet" href="css/layout.css?v=2">
+    <link rel="stylesheet" href="css/components.css?v=2">
+    <link rel="stylesheet" href="css/navigation.css?v=2">
+    <link rel="stylesheet" href="css/animations.css?v=2">
+    <link rel="stylesheet" href="css/pomodoro.css?v=2">
+    <link rel="stylesheet" href="css/stopwatch.css?v=2">
+    <link rel="stylesheet" href="css/responsive.css?v=2">
 </head>
 <body>
     <!-- Controls (Top Right) -->
@@ -38,27 +42,106 @@
         </button>
     </div>
 
-    <main class="clock-container">
-        <div class="clock-content">
-            <!-- Time Display -->
-            <div class="time-display">
-                <span id="hours" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
-                <span class="colon">:</span>
-                <span id="minutes" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
-                <span class="colon">:</span>
-                <span id="seconds" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
-                <span id="am-pm" class="am-pm"></span>
-            </div>
+    <main class="app-container">
+        <!-- CLOCK MODULE -->
+        <section id="view-clock" class="module-view active" data-view="clock">
+            <div class="module-content">
+                <!-- Time Display -->
+                <div class="time-display">
+                    <span id="hours" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
+                    <span class="colon">:</span>
+                    <span id="minutes" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
+                    <span class="colon">:</span>
+                    <span id="seconds" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
+                    <span id="am-pm" class="am-pm"></span>
+                </div>
 
-            <!-- Date Display -->
-            <div class="date-display">
-                <span id="weekday" class="weekday">Monday</span>, 
-                <span id="full-date" class="full-date">01 January 2026</span>
+                <!-- Date Display -->
+                <div class="date-display">
+                    <span id="weekday" class="weekday">Monday</span>, 
+                    <span id="full-date" class="full-date">01 January 2026</span>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- POMODORO MODULE -->
+        <section id="view-pomodoro" class="module-view" data-view="pomodoro">
+            <div class="module-content">
+                <!-- Progress Ring / Timer Display -->
+                <div class="pomodoro-display">
+                    <svg class="progress-ring" width="300" height="300">
+                        <circle class="progress-ring-bg" cx="150" cy="150" r="140"></circle>
+                        <circle class="progress-ring-circle" cx="150" cy="150" r="140"></circle>
+                    </svg>
+                    <div class="pomodoro-time time-display">
+                        <span id="pomodoro-minutes" class="time-part"><span class="digit">2</span><span class="digit">5</span></span>
+                        <span class="colon">:</span>
+                        <span id="pomodoro-seconds" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
+                    </div>
+                </div>
+
+                <!-- Session Status -->
+                <div class="session-status">
+                    <span id="session-label">Focus Session</span>
+                    <span id="session-counter" class="pill-badge">1/4</span>
+                </div>
+
+                <!-- Controls -->
+                <div class="timer-controls">
+                    <button id="pomodoro-start" class="timer-btn">Start</button>
+                    <button id="pomodoro-reset" class="timer-btn secondary">Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STOPWATCH MODULE -->
+        <section id="view-stopwatch" class="module-view" data-view="stopwatch">
+            <div class="module-content">
+                <!-- Stopwatch Display -->
+                <div class="stopwatch-display time-display">
+                    <span id="sw-minutes" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
+                    <span class="colon">:</span>
+                    <span id="sw-seconds" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
+                    <span class="colon">.</span>
+                    <span id="sw-milliseconds" class="time-part ms-part"><span class="digit">0</span><span class="digit">0</span></span>
+                </div>
+
+                <!-- Controls -->
+                <div class="timer-controls">
+                    <button id="sw-start" class="timer-btn">Start</button>
+                    <button id="sw-lap-reset" class="timer-btn secondary">Lap</button>
+                </div>
+
+                <!-- Laps Container -->
+                <div class="laps-container">
+                    <ul id="laps-list" class="laps-list">
+                        <!-- Laps will be injected here -->
+                    </ul>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-container glass-panel">
+            <div class="nav-indicator" id="nav-indicator"></div>
+            <button class="nav-item active" data-target="clock" aria-label="Clock">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>Clock</span>
+            </button>
+            <button class="nav-item" data-target="pomodoro" aria-label="Pomodoro">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="M4.93 4.93l1.41 1.41"></path><path d="M17.66 17.66l1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="M6.34 17.66l-1.41 1.41"></path><path d="M19.07 4.93l-1.41 1.41"></path></svg>
+                <span>Pomodoro</span>
+            </button>
+            <button class="nav-item" data-target="stopwatch" aria-label="Stopwatch">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"></circle><polyline points="12 9 12 13 14 15"></polyline><line x1="10" y1="3" x2="14" y2="3"></line><line x1="12" y1="3" x2="12" y2="5"></line></svg>
+                <span>Stopwatch</span>
+            </button>
+        </div>
+    </nav>
+
     <!-- JS -->
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/app.js?v=2"></script>
 </body>
 </html>

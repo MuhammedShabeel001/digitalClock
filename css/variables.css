@@ -6,33 +6,51 @@
     
     /* Transitions */
     --transition-fast: 150ms ease;
-    --transition-normal: 300ms ease;
+    --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
     
     /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
     
     /* Border Radius */
-    --radius-full: 9999px;
+    --radius-sm: 8px;
+    --radius-md: 16px;
     --radius-lg: 32px;
+    --radius-full: 9999px;
 }
 
 /* Dark Theme (Default) */
 [data-theme="dark"] {
-    --color-bg: #292d32;
-    --color-text-primary: #e5e7eb;
-    --color-text-secondary: #9ca3af;
-    --color-accent: #ef4444; /* Bright Red */
-    --neumorphic-shadow: 8px 8px 16px #1d1f23, -8px -8px 16px #353b41;
-    --neumorphic-shadow-inset: inset 6px 6px 12px #1f2226, inset -6px -6px 12px #33383e;
+    --color-bg: #1c1c1e;
+    --color-bg-secondary: #2c2c2e;
+    --color-text-primary: #f5f5f7;
+    --color-text-secondary: #8e8e93;
+    --color-accent: #ff9f0a; /* Premium Apple-like Orange */
+    
+    --glass-bg: rgba(28, 28, 30, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    
+    --neumorphic-shadow: 8px 8px 16px rgba(0,0,0,0.3), -8px -8px 16px rgba(255,255,255,0.03);
+    --neumorphic-shadow-inset: inset 6px 6px 12px rgba(0,0,0,0.3), inset -6px -6px 12px rgba(255,255,255,0.03);
 }
 
 /* Light Theme */
 [data-theme="light"] {
-    --color-bg: #e0e5ec;
-    --color-text-primary: #4d5969;
-    --color-text-secondary: #8a96a3;
-    --color-accent: #dc2626; /* Deep Red */
-    --neumorphic-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
-    --neumorphic-shadow-inset: inset 6px 6px 12px rgba(163, 177, 198, 0.6), inset -6px -6px 12px rgba(255, 255, 255, 0.5);
+    --color-bg: #f5f5f7;
+    --color-bg-secondary: #ffffff;
+    --color-text-primary: #1d1d1f;
+    --color-text-secondary: #86868b;
+    --color-accent: #ff9f0a;
+    
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(0, 0, 0, 0.05);
+    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    
+    --neumorphic-shadow: 8px 8px 16px rgba(174, 174, 192, 0.4), -8px -8px 16px #ffffff;
+    --neumorphic-shadow-inset: inset 6px 6px 12px rgba(174, 174, 192, 0.4), inset -6px -6px 12px #ffffff;
 }

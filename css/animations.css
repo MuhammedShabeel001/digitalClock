@@ -1,0 +1,20 @@
+/* Smooth transition animations for SPA views */
+
+.module-view {
+    transition: visibility var(--transition-normal), opacity var(--transition-normal), transform var(--transition-normal);
+    transform: translateY(8px);
+}
+
+.module-view.active {
+    transform: translateY(0);
+}
+
+.module-view.slide-out {
+    opacity: 0;
+    transform: translateY(-8px);
+}
+
+.module-view.slide-in {
+    opacity: 0;
+    transform: translateY(8px);
+}

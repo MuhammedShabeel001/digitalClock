@@ -27,12 +27,12 @@ export const initClock = () => {
  */
 export const toggleFormat = () => {
     is12HourFormat = !is12HourFormat;
-    
+
     // Update button text
     if (elements.formatBtnText) {
         elements.formatBtnText.textContent = is12HourFormat ? '24H' : '12H';
     }
-    
+
     // Force immediate update to reflect format change
     updateClock(true);
 };
@@ -49,18 +49,18 @@ const animateElement = (el, newValue, force) => {
         el.classList.remove('fade-out', 'fade-in');
         return;
     }
-    
+
     el.classList.add('fade-out');
-    
+
     setTimeout(() => {
         el.textContent = newValue;
         // Snap to top, invisible
         el.classList.remove('fade-out');
         el.classList.add('fade-in');
-        
+
         // Force reflow to ensure the transition: none takes effect
         void el.offsetWidth;
-        
+
         // Remove fade-in so it smoothly bounces down to the normal position
         el.classList.remove('fade-in');
     }, 250); // Matched with the 250ms transition time in CSS
@@ -68,7 +68,7 @@ const animateElement = (el, newValue, force) => {
 
 const updateElementValue = (el, newValue, force = false) => {
     if (!el) return;
-    
+
     const digits = el.querySelectorAll('.digit');
     if (digits.length > 0) {
         // It's a time part with individual digits
@@ -92,12 +92,12 @@ const updateElementValue = (el, newValue, force = false) => {
  */
 const updateClock = (force = false) => {
     const now = new Date();
-    
+
     // Get Time
     let hours = now.getHours();
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
-    
+
     // Format Time
     let amPmStr = '';
     if (is12HourFormat) {
@@ -105,22 +105,22 @@ const updateClock = (force = false) => {
         hours = formattedHours;
         amPmStr = period;
     }
-    
+
     // Update Time DOM
     updateElementValue(elements.hours, padZero(hours), force);
     updateElementValue(elements.minutes, padZero(minutes), force);
     updateElementValue(elements.seconds, padZero(seconds), force);
     updateElementValue(elements.amPm, amPmStr, force);
-    
+
     // Get Date
     const { weekday, fullDate } = formatDate(now);
-    
+
     // Update Date DOM
     // For date, we typically don't want the fade animation every time, just update directly
     if (elements.weekday && elements.weekday.textContent !== weekday) {
         elements.weekday.textContent = weekday;
     }
-    
+
     if (elements.fullDate && elements.fullDate.textContent !== fullDate) {
         elements.fullDate.textContent = fullDate;
     }

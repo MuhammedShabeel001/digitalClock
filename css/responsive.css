@@ -1,44 +1,84 @@
+/* Responsive Adjustments */
+
 @media (max-width: 768px) {
+    :root {
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+    }
+    
     .time-display {
         font-size: 6rem;
+    }
+    
+    .am-pm {
+        font-size: 2rem;
+    }
+    
+    .ms-part {
+        font-size: 2.5rem;
+    }
+    
+    .pomodoro-time {
+        font-size: 3.5rem;
+    }
+    
+    .progress-ring {
+        transform: scale(0.8) rotate(-90deg);
+        transform-origin: center;
+    }
+    
+    .pomodoro-display {
+        width: 240px;
+        height: 240px;
+    }
+
+    .bottom-nav {
+        bottom: var(--spacing-sm);
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .nav-container {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .nav-item {
+        flex: 1;
+        justify-content: center;
+        padding: 12px 10px;
+    }
+    
+    .nav-item span {
+        display: none; /* Hide text on mobile for cleaner look */
+    }
+}
+
+@media (max-width: 480px) {
+    .time-display {
+        font-size: 4.5rem;
     }
     
     .am-pm {
         font-size: 1.5rem;
     }
     
-    .date-display {
-        font-size: 1.25rem;
+    .ms-part {
+        font-size: 2rem;
     }
     
     .top-controls {
-        top: 1.5rem;
-        right: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .time-display {
-        font-size: 4rem;
-        letter-spacing: -2px;
-    }
-    
-    .am-pm {
-        font-size: 1.2rem;
-    }
-    
-    .date-display {
-        font-size: 1.1rem;
-    }
-    
-    .top-controls {
-        top: 1rem;
-        right: 1rem;
-        gap: 0.75rem;
+        top: var(--spacing-sm);
+        right: var(--spacing-sm);
     }
     
     .icon-btn {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .laps-container {
+        height: 200px;
+        width: 90%;
     }
 }

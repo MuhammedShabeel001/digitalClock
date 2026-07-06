@@ -1,0 +1,61 @@
+/* Stopwatch specific styles */
+.stopwatch-display {
+    margin-bottom: var(--spacing-md);
+}
+
+.ms-part {
+    font-size: 4rem;
+    color: var(--color-text-secondary);
+    width: 2.2em; /* Ensure stable width for MS */
+    justify-content: flex-start;
+}
+
+.laps-container {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+    margin-top: var(--spacing-xl);
+    overflow-y: auto;
+    border-radius: var(--radius-md);
+    
+    /* Hide scrollbar for cleaner look */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.laps-container::-webkit-scrollbar {
+    display: none;
+}
+
+.laps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lap-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    color: var(--color-text-primary);
+    font-size: 1.1rem;
+    animation: smoothReveal 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.lap-index {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.lap-diff {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    margin-left: 10px;
+}

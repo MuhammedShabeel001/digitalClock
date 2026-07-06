@@ -1,5 +1,10 @@
 import { initClock, toggleFormat } from './clock.js';
 import { initTheme, toggleTheme } from './theme.js';
+import { Router } from './router.js';
+import { Navigation } from './components/navigation.js';
+import { PomodoroTimer } from './pomodoro/timer.js';
+import { Stopwatch } from './stopwatch/stopwatch.js';
+import { storage } from './storage.js';
 
 const moonSvg = `<path class="moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
 const sunSvg = `<circle class="sun" cx="12" cy="12" r="5"></circle>
@@ -16,16 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Theme
     const currentTheme = initTheme();
     updateThemeIcon(currentTheme);
-    
-    // Initialize Clock
+
+    // Initialize SPA Router and Navigation
+    const router = new Router('clock');
+    new Navigation(router);
+
+    // Initialize Modules
     initClock();
-    
-    // Event Listeners
+    new PomodoroTimer();
+    new Stopwatch();
+
+    // Event Listeners for Top Controls
     const dateToggleBtn = document.getElementById('date-toggle');
     const dateDisplay = document.querySelector('.date-display');
-    
+
     // Load date visibility preference
-    const isDateHidden = localStorage.getItem('hide-date') === 'true';
+    const isDateHidden = storage.get('hide-date', false);
     if (isDateHidden && dateDisplay) {
         dateDisplay.classList.add('hidden');
     }
@@ -33,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dateToggleBtn && dateDisplay) {
         dateToggleBtn.addEventListener('click', () => {
             const isHidden = dateDisplay.classList.toggle('hidden');
-            localStorage.setItem('hide-date', isHidden);
+            storage.set('hide-date', isHidden);
         });
     }
 
@@ -43,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleFormat();
         });
     }
-    
+
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
