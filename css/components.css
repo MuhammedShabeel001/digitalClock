@@ -1,11 +1,18 @@
 /* Top Controls */
-.top-controls {
+.top-controls, .top-controls-left {
     position: absolute;
     top: var(--spacing-lg);
-    right: var(--spacing-lg);
     display: flex;
     gap: var(--spacing-md);
     z-index: 10;
+}
+
+.top-controls {
+    right: var(--spacing-lg);
+}
+
+.top-controls-left {
+    left: var(--spacing-lg);
 }
 
 .icon-btn {

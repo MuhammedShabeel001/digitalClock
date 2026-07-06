@@ -16,12 +16,23 @@
     <link rel="stylesheet" href="css/layout.css?v=2">
     <link rel="stylesheet" href="css/components.css?v=2">
     <link rel="stylesheet" href="css/navigation.css?v=2">
-    <link rel="stylesheet" href="css/animations.css?v=2">
-    <link rel="stylesheet" href="css/pomodoro.css?v=2">
-    <link rel="stylesheet" href="css/stopwatch.css?v=2">
-    <link rel="stylesheet" href="css/responsive.css?v=2">
+    <link rel="stylesheet" href="css/animations.css?v=7">
+    <link rel="stylesheet" href="css/pomodoro.css?v=7">
+    <link rel="stylesheet" href="css/stopwatch.css?v=7">
+    <link rel="stylesheet" href="css/clock-analog.css?v=7">
+    <link rel="stylesheet" href="css/responsive.css?v=7">
 </head>
 <body>
+    <!-- Controls (Top Left) -->
+    <div class="top-controls-left">
+        <button id="analog-toggle" class="icon-btn" aria-label="Toggle Analog Clock">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+        </button>
+    </div>
+
     <!-- Controls (Top Right) -->
     <div class="top-controls">
         <button id="sound-toggle" class="icon-btn" aria-label="Toggle Sound">
@@ -48,23 +59,38 @@
     </div>
 
     <main class="app-container">
-        <!-- CLOCK MODULE -->
+        <!-- Clock View -->
         <section id="view-clock" class="module-view active" data-view="clock">
-            <div class="module-content">
-                <!-- Time Display -->
-                <div class="time-display">
-                    <span id="hours" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
-                    <span class="colon">:</span>
-                    <span id="minutes" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
-                    <span class="colon">:</span>
-                    <span id="seconds" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
-                    <span id="am-pm" class="am-pm"></span>
+            <div class="module-content clock-wrapper">
+                
+                <!-- Analog Clock -->
+                <div class="analog-clock-container">
+                    <div class="analog-face" id="analog-face">
+                        <!-- Dynamically populated dial marks can go here, or we can just use the hands for a minimal look -->
+                        <div class="hand hand-hour" id="hand-hour"></div>
+                        <div class="hand hand-minute" id="hand-minute"></div>
+                        <div class="hand hand-second" id="hand-second"></div>
+                        <div class="analog-center"></div>
+                    </div>
                 </div>
 
-                <!-- Date Display -->
-                <div class="date-display">
-                    <span id="weekday" class="weekday">Monday</span>, 
-                    <span id="full-date" class="full-date">01 January 2026</span>
+                <!-- Digital Clock -->
+                <div class="digital-clock-container">
+                    <!-- Time Display -->
+                    <div class="time-display">
+                        <span id="hours" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
+                        <span class="colon">:</span>
+                        <span id="minutes" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
+                        <span class="colon">:</span>
+                        <span id="seconds" class="time-part"><span class="digit">0</span><span class="digit">0</span></span>
+                        <span id="am-pm" class="am-pm"></span>
+                    </div>
+
+                    <!-- Date Display -->
+                    <div class="date-display">
+                        <span id="weekday" class="weekday">Monday</span>, 
+                        <span id="full-date" class="full-date">01 January 2026</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -147,6 +173,6 @@
     </nav>
 
     <!-- JS -->
-    <script type="module" src="js/app.js?v=3"></script>
+    <script type="module" src="js/app.js?v=7"></script>
 </body>
 </html>

@@ -1,0 +1,166 @@
+/* Analog Clock Styles */
+
+.clock-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 350px;
+}
+
+/* Digital and Analog containers */
+.digital-clock-container,
+.analog-clock-container {
+    transition: opacity var(--transition-normal), transform var(--transition-normal), visibility var(--transition-normal);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.digital-clock-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    width: 100%;
+}
+
+.analog-clock-container {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 450px;
+    height: 450px;
+}
+
+/* When analog is active */
+.clock-wrapper.show-analog .digital-clock-container {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%) scale(0.95);
+}
+
+.clock-wrapper.show-analog .analog-clock-container {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* The Clock Face */
+.analog-face {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: var(--color-bg);
+    box-shadow: var(--neumorphic-shadow);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--glass-border);
+}
+
+/* Inner shadow for depth */
+.analog-face::after {
+    content: '';
+    position: absolute;
+    top: 3%;
+    left: 3%;
+    width: 94%;
+    height: 94%;
+    border-radius: 50%;
+    box-shadow: var(--neumorphic-shadow-inset);
+    pointer-events: none;
+}
+
+/* Center Dot */
+.analog-center {
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Hands */
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    border-radius: var(--radius-full);
+    z-index: 5;
+}
+
+.hand-hour {
+    width: 10px;
+    height: 110px;
+    background-color: var(--color-text-primary);
+    margin-left: -5px; 
+}
+
+.hand-minute {
+    width: 8px;
+    height: 155px;
+    background-color: var(--color-text-secondary);
+    margin-left: -4px;
+}
+
+.hand-second {
+    width: 4px;
+    height: 175px;
+    background-color: var(--color-accent);
+    margin-left: -2px;
+    z-index: 6;
+}
+
+.hand-second::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    background-color: var(--color-accent);
+    border-radius: var(--radius-full);
+}
+
+/* Dial Marks */
+.dial-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    margin-top: -2px;
+    margin-left: -2px;
+    background-color: var(--color-text-secondary);
+    border-radius: 50%;
+    opacity: 0.5;
+    transition: background-color var(--transition-normal), opacity var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.dial-mark.active-hour {
+    background-color: var(--color-accent);
+    opacity: 1;
+    box-shadow: 0 0 8px var(--color-accent);
+}
+
+/* Media query for mobile */
+@media (max-width: 480px) {
+    .analog-clock-container {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .hand-hour { height: 60px; }
+    .hand-minute { height: 85px; }
+    .hand-second { height: 95px; }
+    
+    .clock-wrapper {
+        min-height: 280px;
+    }
+}

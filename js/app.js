@@ -86,11 +86,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (soundBtn) soundBtn.style.display = view === 'pomodoro' ? 'flex' : 'none';
         if (dateBtn) dateBtn.style.display = view === 'clock' ? 'flex' : 'none';
         if (formatToggleBtn) formatToggleBtn.style.display = view === 'clock' ? 'flex' : 'none';
+        
+        const topControlsLeft = document.querySelector('.top-controls-left');
+        if (topControlsLeft) topControlsLeft.style.display = view === 'clock' ? 'flex' : 'none';
     };
     
     // Set initial state (default view is clock)
     updateTopControls('clock');
     
+    const analogToggleBtn = document.getElementById('analog-toggle');
+    if (analogToggleBtn) {
+        const isAnalog = storage.get('is-analog', false);
+        const clockWrapper = document.querySelector('.clock-wrapper');
+        
+        if (isAnalog && clockWrapper) {
+            clockWrapper.classList.add('show-analog');
+        }
+        
+        analogToggleBtn.addEventListener('click', () => {
+            if (clockWrapper) {
+                const toggled = clockWrapper.classList.toggle('show-analog');
+                storage.set('is-analog', toggled);
+            }
+        });
+    }
+
     // Listen for view changes from router
     window.addEventListener('viewChanged', (e) => {
         updateTopControls(e.detail.view);

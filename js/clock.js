@@ -15,11 +15,42 @@ export const initClock = () => {
     elements.amPm = document.getElementById('am-pm');
     elements.weekday = document.getElementById('weekday');
     elements.fullDate = document.getElementById('full-date');
-    elements.formatBtnText = document.getElementById('format-icon-text');
+    elements.handHour = document.getElementById('hand-hour');
+    elements.handMinute = document.getElementById('hand-minute');
+    elements.handSecond = document.getElementById('hand-second');
+    
+    // Generate minimal dial marks for hours
+    const analogFace = document.getElementById('analog-face');
+    if (analogFace && analogFace.querySelectorAll('.dial-mark').length === 0) {
+        elements.dialMarks = [];
+        for (let i = 0; i < 12; i++) {
+            const mark = document.createElement('div');
+            mark.className = 'dial-mark';
+            // Translate outward by 195px (since clock is 450px width, radius is 225, padding is 30)
+            mark.style.transform = `rotate(${i * 30}deg) translateY(-195px)`;
+            
+            // Make the 12, 3, 6, 9 dots slightly more pronounced
+            if (i % 3 === 0) {
+                mark.style.width = '6px';
+                mark.style.height = '6px';
+                mark.style.marginTop = '-3px';
+                mark.style.marginLeft = '-3px';
+                mark.style.opacity = '0.9';
+            }
+            
+            analogFace.appendChild(mark);
+            elements.dialMarks.push(mark);
+        }
+    }
 
-    // Run immediately then set interval
+    // Run immediately then loop via requestAnimationFrame
     updateClock(true); // force first update to avoid animation
-    setInterval(updateClock, 1000);
+    requestAnimationFrame(clockLoop);
+};
+
+const clockLoop = () => {
+    updateClock(false);
+    requestAnimationFrame(clockLoop);
 };
 
 /**
@@ -123,5 +154,31 @@ const updateClock = (force = false) => {
 
     if (elements.fullDate && elements.fullDate.textContent !== fullDate) {
         elements.fullDate.textContent = fullDate;
+    }
+
+    // Update Analog Clock
+    if (elements.handHour && elements.handMinute && elements.handSecond) {
+        const ms = now.getMilliseconds();
+        
+        // Calculate degrees (smooth sweeping)
+        const secondsDegrees = ((seconds + ms / 1000) / 60) * 360;
+        const minutesDegrees = ((minutes + (seconds + ms / 1000) / 60) / 60) * 360;
+        const hoursDegrees = (((now.getHours() % 12) + (minutes + seconds / 60) / 60) / 12) * 360;
+
+        elements.handSecond.style.transform = `rotate(${secondsDegrees}deg)`;
+        elements.handMinute.style.transform = `rotate(${minutesDegrees}deg)`;
+        elements.handHour.style.transform = `rotate(${hoursDegrees}deg)`;
+
+        // Highlight current hour dot
+        if (elements.dialMarks) {
+            const currentHourIndex = now.getHours() % 12;
+            elements.dialMarks.forEach((mark, index) => {
+                if (index === currentHourIndex) {
+                    mark.classList.add('active-hour');
+                } else {
+                    mark.classList.remove('active-hour');
+                }
+            });
+        }
     }
 };
